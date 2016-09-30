@@ -3,7 +3,7 @@ var PER_ROW = 3,
     search_endpoint = base_endpoint +"&method=flickr.photos.search&text=",
     expand_endpoint = base_endpoint +"&method=flickr.photos.getInfo&photo_id=",
     default_endpoint = base_endpoint +"&method=flickr.people.getPublicPhotos",
-    page = 0
+    page = 1
 
 /**
  * Simple template replacement engine.
@@ -180,9 +180,9 @@ function getInfo(photoId) {
 function pager(currentPage, size) {
     var result = $('<div>')
 
-    for (var i = 0; i < size; i++) {
+    for (var i = 1; i <= size; i++) {
         var selected = i === parseInt(currentPage, 10) ? 'selected' : ''
-        result.append('<a href="#" class="'+ selected +'" onclick="loadPage('+ i +')">'+ (i+1) +'</a>')
+        result.append('<a href="#" class="'+ selected +'" onclick="loadPage('+ i +')">'+ (i) +'</a>')
     }
 
     return result
