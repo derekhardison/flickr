@@ -82,6 +82,15 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">NASA Stream</a>
         </div>
+
+        <div id="loading" class="navbar-text">
+            <span class="glyphicon glyphicon-hourglass"></span> Loading...
+        </div>
+
+        <div id="search-no-results" style="display: none; color: red;" class="navbar-text">
+            <span class="glyphicon glyphicon-search"></span> No Results
+        </div>
+
         <form class="navbar-form navbar-right" onsubmit="search(event)" role="search">
             <div class="input-group">
                 <input type="text" id="search-box" class="form-control input-sm" placeholder="Search...">
@@ -97,18 +106,6 @@
     <div class="row col-lg-12">&nbsp;</div>
     <div class="row col-lg-12">&nbsp;</div>
     <div class="row col-lg-12">&nbsp;</div>
-
-    <div id="loading" class="row col-lg-12 text-center">
-        <h2>
-            <span class="glyphicon glyphicon-hourglass"></span> Loading...
-        </h2>
-    </div>
-
-    <div id="search-no-results" style="display: none" class="row col-lg-12 text-center">
-        <h2>
-            <span class="glyphicon glyphicon-search"></span> No Results
-        </h2>
-    </div>
 </div>
 
 <div id="search-container" class="container-fluid">
