@@ -1,0 +1,130 @@
+<html>
+<head>
+    <title>NASA Flickr Stream</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <script id="image-template" type="text/template">
+        <div id="image-container-{{id}}" class="text-center col-xs-4">
+            <h5>{{title}}</h5>
+            <a href="javascript:getInfo({{id}})" title="Click to show details">
+                <img src="{{url}}"
+                     class="img-rounded"
+                     style="max-width: 400px">
+            </a>
+            <div class="photo-details">
+                <!-- plop photo details here after loading -->
+            </div>
+        </div>
+    </script>
+
+    <script id="description-modal" type="text/template">
+        <div class="modal" style="display: block" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a type="button" href="javascript:close()" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                        <h4 class="modal-title">{{title}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-responsive table-condensed">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" style="border-top: none">
+                                    <div class="pre-scrollable">
+                                        <small>{{description}}</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%">Date Taken:</td>
+                                <td style="width: 80%">{{taken}}</td>
+                            </tr>
+                            <tr>
+                                <td>Views:</td>
+                                <td>{{views}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:close()" type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <style>
+        footer a.selected {
+            font-weight: bold;
+            color: red;
+        }
+
+        footer a:hover {
+            text-decoration: none;
+        }
+
+        footer a:not(:last-child):after {
+            content: ' | ';
+            color: initial;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body data-current-page="0">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">NASA Stream</a>
+        </div>
+        <form class="navbar-form navbar-right" onsubmit="search(event)" role="search">
+            <div class="input-group">
+                <input type="text" id="search-box" class="form-control input-sm" placeholder="Search...">
+                <div class=" input-group-btn">
+                    <button type="submit" class="btn btn-sm btn-info">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row col-lg-12">&nbsp;</div>
+    <div class="row col-lg-12">&nbsp;</div>
+    <div class="row col-lg-12">&nbsp;</div>
+
+    <div id="loading" class="row col-lg-12 text-center">
+        <h2>
+            <span class="glyphicon glyphicon-hourglass"></span> Loading...
+        </h2>
+    </div>
+
+    <div id="search-no-results" style="display: none" class="row col-lg-12 text-center">
+        <h2>
+            <span class="glyphicon glyphicon-search"></span> No Results
+        </h2>
+    </div>
+</div>
+
+<div id="search-container" class="container-fluid">
+    <!-- Images load here -->
+</div>
+
+<hr/>
+
+<div class="container">
+    <footer class="text-center">
+        <!-- Paging here -->
+    </footer>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="flickr.js"></script>
+</body>
+</html>
