@@ -78,7 +78,7 @@ function search(event) {
     container().empty()
     loading(true)
 
-    _setPage(0)
+    _setPage(1)
     $.ajax({ url: url(searchValue(), currentPage()) }).then(function(response) {
         render(response.photos.photo)
         footer().html(pager(currentPage(), response.photos.pages))
