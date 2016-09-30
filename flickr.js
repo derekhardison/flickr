@@ -2,7 +2,8 @@ var PER_ROW = 3,
     base_endpoint = "https://api.flickr.com/services/rest/?api_key=a5e95177da353f58113fd60296e1d250&user_id=24662369@N07&format=json&nojsoncallback=1",
     search_endpoint = base_endpoint +"&method=flickr.photos.search&text=",
     expand_endpoint = base_endpoint +"&method=flickr.photos.getInfo&photo_id=",
-    default_endpoint = base_endpoint +"&method=flickr.people.getPublicPhotos"
+    default_endpoint = base_endpoint +"&method=flickr.people.getPublicPhotos",
+    page = 0
 
 /**
  * Simple template replacement engine.
@@ -27,11 +28,15 @@ function generate(values, template) {
 }
 
 function container() {
-    return $("#search-container")
+    return $('#search-container')
 }
 
 function currentPage() {
-    return $('body').data('current-page')
+    return parseInt(page, 10)
+}
+
+function _setPage(newPage) {
+    page = newPage
 }
 
 function searchValue() {
@@ -39,7 +44,7 @@ function searchValue() {
 }
 
 function footer() {
-    return $("footer")
+    return $('footer')
 }
 
 /**
@@ -68,11 +73,13 @@ function image(farmId, serverId, id, secret, size) {
  * @param event represents the mouse event.
  */
 function search(event) {
+    event.preventDefault()
+
     container().empty()
     loading(true)
 
     _setPage(0)
-    $.ajax({ url: url(searchValue(), 0) }).then(function(response) {
+    $.ajax({ url: url(searchValue(), currentPage()) }).then(function(response) {
         render(response.photos.photo)
         footer().html(pager(currentPage(), response.photos.pages))
     })
@@ -96,10 +103,6 @@ function url(query, page) {
     }
 
     return result
-}
-
-function _setPage(page) {
-    $('body').data('current-page', page)
 }
 
 /**
@@ -140,7 +143,7 @@ function getIn(path, object) {
  * Close the modal (if open).
  */
 function close() {
-    $('.modal').remove()
+    $('#modal').remove()
 }
 
 /**
@@ -170,15 +173,15 @@ function getInfo(photoId) {
 /**
  * Construct or update the pager at the bottom of the page.
  *
- * @param curentPage
+ * @param currentPage
  * @param size
  * @returns {*|jQuery|HTMLElement}
  */
-function pager(curentPage, size) {
+function pager(currentPage, size) {
     var result = $('<div>')
 
     for (var i = 0; i < size; i++) {
-        var selected = i === curentPage ? 'selected' : ''
+        var selected = i === parseInt(currentPage, 10) ? 'selected' : ''
         result.append('<a href="#" class="'+ selected +'" onclick="loadPage('+ i +')">'+ (i+1) +'</a>')
     }
 
@@ -193,7 +196,7 @@ function pager(curentPage, size) {
 function render(photos) {
     loading(false)
 
-    var template = $("#image-template").html(),
+    var template = $('#image-template').html(),
         results = $('<div>'), content
 
     hasResults(photos.length)
@@ -201,7 +204,7 @@ function render(photos) {
     for (var i = 0; i < photos.length; i++) {
         if (i % PER_ROW === 0) {
             // create a new row for images.
-            content = $('<div class="row">')
+            content = $('<div>').addClass('row')
             results.append(content)
         }
 
